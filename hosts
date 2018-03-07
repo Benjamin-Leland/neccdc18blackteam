@@ -1,6 +1,7 @@
 [windows]
 
 [windows:children]
+domain-controllers
 tintin
 holmes
 mulder
@@ -21,6 +22,8 @@ gadget
 payne
 
 [domain-controllers]
+
+[domain-controllers:children]
 tintin
 
 
