@@ -3,7 +3,7 @@
 # password complexity requirements (typically, 8 chars, 1 lowercase, 1 uppercase, 1 num/special char)
 # cmd: net user administrator *
 
-- hosts: domain-controller
+- hosts: domain-controllers
   remote_user: Administrator
   gather_facts: no
 

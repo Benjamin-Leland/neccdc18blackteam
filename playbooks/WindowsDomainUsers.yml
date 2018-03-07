@@ -1,7 +1,7 @@
 # Notes:
 # The WindowsDomainControllers.yml playbook must be completed prior to running this playbook
 
-- hosts: domain-controller
+- hosts: domain-controllers
   remote_user: admin
 
   tasks:
