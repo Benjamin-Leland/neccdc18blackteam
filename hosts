@@ -13,18 +13,6 @@ ansible_user=Administrator
 ansible_password=Change.me!
 ansible_port=5985
 
-[linux]
-
-[linux:children]
-marple
-tracy
-gadget
-payne
-
-[ubuntu-clients]
-marple
-tracy
-
 
 [domain-controllers]
 10.1.1.10	domainname=team1.wildeagle.net  netbiosname=TEAM01  adbackuppass=Change.me!  team_number=01
@@ -45,12 +33,6 @@ tracy
 
 [clouseau]
 10.1.1.15	ansible_user=admin
-
-[marple]
-10.1.1.12
-
-[tracy]
-10.1.1.13
 
 [gadget]
 10.1.1.16

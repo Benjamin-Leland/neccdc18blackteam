@@ -1,19 +1,39 @@
-# This will upload the join script to all ubuntu-clients hosts
-# The script must be manually run in order to provide a team number and answer prompts from installing packages
-# The playbook can be run after running join.sh to delete the file on all ubuntu-clients by commenting out the last task
-- hosts: ubuntu-clients
+# Join debain host to windows domain
+
+- hosts: debian-clients
   gather_facts: no
   remote_user: root
 
-  tasks:
-      - name: Upload join script
-        copy:
-          src: ../scripts/join.sh
-          dest: /tmp/join.sh
-          mode: 0755
+  vars:
+    team_number: "{{ team | default('01') }}"
 
-#      - name: Delete join script
-#        file: 
-#          path: /tmp/join.sh
-#          state: absent
+  tasks:
+    - name: Update and install packages
+      shell: |
+        apt -y update
+        apt -y install winbind samba cifs-utils smbclient krb5-user libpam-winbind
+
+    - name: Push SMB config
+      blockinfile:
+        block: "{{ lookup('file', '../scripts/smb.conf') }}"
+        dest: "/etc/samba/smb.conf"
+        backup: yes
+
+    - name: Fix team number
+      shell:
+         sed -i 's/TEAMXX/TEAM{{ team_number }}/g' /etc/samba/smb.conf
+
+    - name: Restart service
+      shell: |
+        service smbd restart
+        service winbind restart
+        net ads join -U Administrator
+        pam-auth-update
+        sed -i 's/passwd.*/passwd: compat winbind/g' /etc/nsswitch.conf
+        sed -i 's/group.*/group:   compat winbind/g' /etc/nsswitch.conf
+        sed -i 's/shadow.*/shadow:  compat winbind/g' /etc/nsswitch.conf
+        echo "session required	pam_mkhomedir.so skel=/etc/skel umask=0022" >> /etc/pam.d/common-account
+        service smbd restart
+        service winbind restart
+
 
