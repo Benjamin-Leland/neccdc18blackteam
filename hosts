@@ -21,17 +21,24 @@ tracy
 gadget
 payne
 
+[ubuntu-clients]
+marple
+tracy
+
+
 [domain-controllers]
+10.1.1.10	domainname=team1.wildeagle.net  netbiosname=TEAM01  adbackuppass=Change.me!  team_number=01
 
-[domain-controllers:children]
-tintin
-
+[windows-clients]
+10.1.1.11	domainname=team1.wildeagle.net domaincontrollerip=10.1.1.10 username=team1\administrator password=Change.me! newhostname=holmes
+10.1.1.14       domainname=team1.wildeagle.net domaincontrollerip=10.1.1.10 username=team1\administrator password=Change.me! newhostname=mulder
+10.1.1.15       domainname=team1.wildeagle.net domaincontrollerip=10.1.1.10 username=tem1\administrator password=Change.me! newhostname=clouseau
 
 [tintin]
 10.1.1.10	domainname=team1.wildeagle.net  netbiosname=TEAM01  adbackuppass=Change.me!  team_number=01
 
 [holmes]
-10.1.1.11
+10.1.1.11	domainname=team1.wildeagle.net  netbiosname=TEAM01  adbackuppass=Change.me!  team_number=01
 
 [mulder]
 10.1.1.14	ansible_user=admin

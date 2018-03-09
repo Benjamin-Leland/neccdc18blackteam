@@ -3,7 +3,7 @@
 # The playbook can be run after running join.sh to delete the file on all ubuntu-clients by commenting out the last task
 - hosts: ubuntu-clients
   gather_facts: no
-  remote_user: administrator
+  remote_user: root
 
   tasks:
       - name: Upload join script
